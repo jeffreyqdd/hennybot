@@ -22,7 +22,7 @@ wait c++? Don't you have to build it? Yes...now assuming my jank python file man
 
 1. Navigate to src/credentials and read "read_this_file" and follow the instructions.
 2. Navigate to src/base
-3. Change c++ build command to whatever one you use
+3. Change c++ build command to whatever one you use (in setup.py)
 4. Run ```python setup.py```
 5. Run ```python henny.py```
 6. Brace for 100000 errors (may or may not happen)
@@ -37,6 +37,7 @@ Note to self: to create an env, use:
 
 ### B. Using Henny Bot
 Just use that 200 iq big brain of yours. Once henny bot is added to the server, just use the command ```-help```.
+
 
 ## Notes to self:
 ### A) commands 
@@ -57,6 +58,8 @@ Link to what context is: https://discordpy.readthedocs.io/en/latest/ext/commands
 @bot.command(name = 'pray', help = 'brief explanation')
 async def pray(context, *args):
 ```
+
+
 
 ### B) C++ + Python
 How to communicate with c++? 

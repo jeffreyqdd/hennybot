@@ -1,18 +1,18 @@
-Jeffrey#7283:
-  coins: 1
-  hangman:
-    current_guess: '..........'
-    num_wrong: 0
-    pay: 24000
-    word: "."
-  last-streak-day: 2021-03-06 21:27:14.748404
-  streak: 6
 Aadarsh#7118:
   last-streak-day: 2021-03-06 21:27:14.748404
   streak: 0
 CS#7561:
   last-streak-day: 2021-03-06 21:27:14.748404
   streak: 1
+Jeffrey#7283:
+  coins: 1
+  hangman:
+    current_guess: '..........'
+    num_wrong: 0
+    pay: 24000
+    word: .
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 6
 LordLavi#8840:
   last-streak-day: 2021-03-06 21:27:14.748404
   streak: 1
