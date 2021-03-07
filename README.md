@@ -18,10 +18,14 @@ The setup is rather painful. Why? Because I wrote it for myself...it's not inten
 
 Why c++ in python? Are you insane? why not cython? C++ is fast, and can perform search operations for games like tic tac toe much faster. Cython is another can of worms I refuse to open for this project (I need to learn it first).
 
+wait c++? Don't you have to build it? Yes...now assuming my jank python file management works, follow the instructions below. 
+
 1. Navigate to src/credentials and read "read_this_file" and follow the instructions.
-2. Navigate to src/base.
-3. TODO: not needed – cython compile
-4. Run ```python henny.py```
+2. Navigate to src/base
+3. Change c++ build command to whatever one you use
+4. Run ```python setup.py```
+5. Run ```python henny.py```
+6. Brace for 100000 errors (may or may not happen)
 5. Worship henny or he will come for you.
 
 
@@ -56,6 +60,31 @@ async def pray(context, *args):
 
 ### B) C++ + Python
 How to communicate with c++? 
+we can use stdin and stdout as a means of providing input and reading output from the c++ executable. Separating arguments using newlines appears to work fine.
+```
+p = Popen([./executable], shell=True, stdout=PIPE, stdin=PIPE)
+value = bytes("input value", 'UTF-8')
+p.stdin.write(value)
+p.stdin.flush()
+result = p.stdout.readline().strip().decode("utf-8").split(" ")
+```
+Then in the c++ file, we can use cin and cout to communicate. THe only drawback is "value" has to have the same number of arguments every time to maintain simplicity. (cin >> x; will wait indefinitely if there is no input value)
+```
+#include <iostream>
+using namespace std;
 
-TODO
+int main()
+{
+    int x,y,z;
+    cin >> x >> y >> z;
+    
+    x*=2;
+    y*=2;
+    z*=3;
 
+    cout << x << endl << y << endl << z <<endl;
+
+    return 0;
+}
+```
+^^didn't test the code above. no guarentees it compiles. (though it should).

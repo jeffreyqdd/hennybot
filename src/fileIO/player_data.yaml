@@ -1,4 +1,48 @@
 Jeffrey#7283:
-  coins: 14
-  last-streak-day: 2021-03-05 20:22:07.205789
-  streak: 5
+  coins: 1
+  hangman:
+    current_guess: '..........'
+    num_wrong: 0
+    pay: 24000
+    word: "."
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 6
+Aadarsh#7118:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 0
+CS#7561:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 1
+LordLavi#8840:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 1
+Piphi5#4257:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 36
+Possibly_Diego???#8078:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 1
+Shazam29#5506:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 1
+its_Ana#3331:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 0
+superadi04#0247:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 18
+superadi04#4363:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 0
+uaena#2698:
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 1
+"\u3148k#8866":
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 0
+"\uB450\uBD80#1205":
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 0
+"\uB450\uBD80#5388":
+  last-streak-day: 2021-03-06 21:27:14.748404
+  streak: 1

@@ -12,11 +12,14 @@ import datetime
 import asyncio
 import random
 import yaml
+import math
 
 #import credentials
 from credentials.credentials import TOKEN
 #import IO handling
 from fileIO.file import fetch_user_data, write_user_data, __read_data
+#import hangman
+from hangman.hangmanPy import interface_hangman, stock_pics_hangman
 
 
 #initiate client
@@ -170,6 +173,126 @@ async def magic8(context, *args):
         await context.message.channel.send(f"```thank you for asking. You now have {data['coins']}🪙```")
 
         write_user_data(context, data)
+
+
+#game 1 code
+@bot.command(name = 'hangman', help = 'bet money by playing hangman (include: number or letter)')
+async def test(context, *args):
+    try:
+
+        data = fetch_user_data(context)
+        multiplier = 1.2
+
+        def render_string(num_wrong, word):
+            string = '\n'.join(stock_pics_hangman[num_wrong]) + '\n'
+            for i in word:
+                if(i == "."):
+                    string += "_ "
+                else:
+                    string += i + " "
+            string += '\n'
+            return string
+
+
+    
+        #create data if it doesn't exist
+        if 'hangman' not in data:
+            data['hangman'] = { 
+                'word' : ".",
+                'current_guess' : ".",
+                'num_wrong' : 0,
+                'pay': 0,
+            }
+        
+        if len(args) == 0:
+            if data['hangman']['word'] == ".": 
+                await context.message.channel.send(f"```To start a game, use '-hangman <coins to bet>' ```")
+                return
+            else:
+                await context.message.channel.send(f"```You already have a game in progress, use '-hangman <letter guess>'...\n{render_string(data['hangman']['num_wrong'], data['hangman']['current_guess'])} ```")
+                return
+
+        #check if is new play
+        if data['hangman']['word'] == ".":
+            coin = int(args[0])
+            await context.message.channel.send(f"```I will take {coin}🪙. If you win, I will reward you with {math.ceil(coin * multiplier)}🪙```")
+            await asyncio.sleep(2)
+            
+            if 'coins' not in data:
+                data['coins'] = 0
+            
+            if data['coins'] - coin < 0:
+                await context.message.channel.send(f"```Hey! You're too poor. Come back when you have money```")
+                return
+            data['coins'] -= coin
+            data['hangman']['pay'] = math.ceil(coin * multiplier)
+                
+            
+            await context.message.channel.send(f"```Thinking....```")
+            await asyncio.sleep(2)
+
+
+            #communicate with interface to get new word
+            #['philosophy', '..........', '0', 'ongoing']
+            result = interface_hangman(
+                word=data['hangman']['word'],
+                current_guess = data['hangman']['current_guess'],
+                guess_letter = '.',
+                num_wrong= 0
+            )
+
+            #update
+            data['hangman']['word'] = result[0]
+            data['hangman']['current_guess'] = result[1]
+            data['hangman']['num_wrong'] = int(result[2])
+            #display
+            await context.message.channel.send(f"```{render_string(data['hangman']['num_wrong'], data['hangman']['current_guess'])}```")
+
+            write_user_data(context, data)
+
+
+        #play
+        else:
+            #communciate with interface
+            guess = args[0]
+            #['philosophy', '..........', '0', 'ongoing']
+            result = interface_hangman(
+                word=data['hangman']['word'],
+                current_guess = data['hangman']['current_guess'],
+                guess_letter = guess,
+                num_wrong= data['hangman']['num_wrong']
+            )
+
+            #update
+            data['hangman']['word'] = result[0]
+            data['hangman']['current_guess'] = result[1]
+            data['hangman']['num_wrong'] = int(result[2])
+            #display
+            await context.message.channel.send(f"```{render_string(data['hangman']['num_wrong'], data['hangman']['current_guess'])}```")
+
+            outcome = result[3]
+
+            if outcome == "loss":
+                await context.message.channel.send(f"```Oops you suck.```")
+                data['hangman']['word'] = "."
+            elif outcome == "win":
+                data['hangman']['word'] = "."
+                data['coins'] += data['hangman']['pay']
+
+                await context.message.channel.send(f"```Gj. +{data['hangman']['pay']}🪙```")
+            
+            write_user_data(context, data)
+
+    except:
+        await context.message.channel.send(f"```dude...tf is wrong with you```")
+
+
+
+
+
+
+        
+
 
 
 
